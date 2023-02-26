@@ -1,8 +1,9 @@
 import Joi from "joi";
-import { User } from "../../models";
+import { User, RefreshToken } from "../../models";
 import bcrypt from "bcrypt";
 import { CustomErrorHandler, JwtService } from "../../services";
 //import { Error } from "mongoose";
+import { REFRESH_SECRET } from "../../config";
 
 const loginController = {
   async login(req, res, next) {
@@ -35,11 +36,36 @@ const loginController = {
       //token
 
       const access_token = JwtService.sign({ _id: user._id, role: user.role });
+      const refresh_token = JwtService.sign(
+        { _id: user._id, role: user.role },
+        "1y",
+        REFRESH_SECRET
+      );
+      // database whitelist
+      await RefreshToken.create({ token: refresh_token });
 
-      res.json({ access_token });
+      res.json({ access_token, refresh_token });
     } catch (err) {
       return next(err);
     }
+  },
+  async logout(req, res, next) {
+    //validation
+    const refreshSchema = Joi.object({
+      refresh_token: Joi.string().required(),
+    });
+
+    const { error } = refreshSchema.validate(req.body);
+    if (error) {
+      return next(error);
+    }
+    try {
+      await RefreshToken.deleteOne({ token: req.body.refresh_token });
+    } catch (err) {
+      return next(new Error("Something went wrong in the database"));
+    }
+
+    res.json({ status: 1 });
   },
 };
 
