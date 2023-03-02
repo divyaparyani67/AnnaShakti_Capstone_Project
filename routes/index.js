@@ -4,6 +4,7 @@ import {
   loginController,
   userController,
   refreshController,
+  donationController,
 } from "../controllers";
 import auth from "../middlewares/auth";
 
@@ -14,5 +15,6 @@ router.post("/login", loginController.login);
 router.get("/me", auth, userController.me);
 router.post("/refresh", refreshController.refresh);
 router.post("/logout", auth, loginController.logout);
+router.post("/donatemeal", donationController.donations);
 
 export default router;

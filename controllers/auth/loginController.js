@@ -44,7 +44,7 @@ const loginController = {
       // database whitelist
       await RefreshToken.create({ token: refresh_token });
 
-      res.json({ access_token, refresh_token });
+      res.json({ access_token, refresh_token, message: "Login Successfully" });
     } catch (err) {
       return next(err);
     }
@@ -65,7 +65,7 @@ const loginController = {
       return next(new Error("Something went wrong in the database"));
     }
 
-    res.json({ status: 1 });
+    res.json({ status: 1, message: "Session Logout" });
   },
 };
 
