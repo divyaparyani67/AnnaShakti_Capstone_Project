@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
     message: "Internal server error",
     ...(DEBUG_MODE === "true" && { originalError: err.message }),
   };
-
+  
   if (err instanceof ValidationError) {
     statusCode = 422;
     data = {
@@ -18,6 +18,7 @@ const errorHandler = (err, req, res, next) => {
 
   if (err instanceof CustomErrorHandler) {
     statusCode = err.status;
+
     data = {
       message: err.message,
     };

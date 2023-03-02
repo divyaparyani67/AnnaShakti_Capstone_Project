@@ -4,8 +4,7 @@ import { REFRESH_SECRET } from "../../config";
 import { RefreshToken, User } from "../../models";
 import { CustomErrorHandler, JwtService } from "../../services";
 
-
-//refresh token is not gettong passed in insomania
+//refresh token is not getting passed
 const refreshController = {
   async refresh(req, res, next) {
     //validation
