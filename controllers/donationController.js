@@ -35,7 +35,9 @@ const donationController = {
     } catch (err) {
       return next(err);
     }
-    res.status(201).json(document);
+    res
+      .status(201)
+      .json({ document, message: "Donation details added successfully" });
   },
 };
 

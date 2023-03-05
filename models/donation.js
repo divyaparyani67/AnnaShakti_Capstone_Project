@@ -12,7 +12,6 @@ const donationSchema = new Schema(
     pincode: { type: Number },
     city: { type: String, required: true },
     state: { type: String, required: true },
-    role: { type: String, default: "donor" },
   },
   { timestamps: true }
 );
