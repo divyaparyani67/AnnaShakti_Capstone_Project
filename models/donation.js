@@ -6,9 +6,8 @@ const donationSchema = new Schema(
   {
     foodQuantity: { type: String, required: true },
     foodDescription: { type: String, required: true },
-    fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    phone: { type: String, required: true, unique: true },
+    donorname: { type: String, required: true },
+    mobile: { type: Number, required: true },
     address: { type: String, required: true },
     pincode: { type: Number },
     city: { type: String, required: true },
