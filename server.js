@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { APP_PORT, DB_URL } from "./config";
 import errorHandler from "./middlewares/errorHandler";
 import routes from "./routes";
+import cors from "cors";
 
 const app = express();
 
@@ -18,8 +19,15 @@ db.once("open", () => {
 });
 
 app.use(express.json());
+app.use(cors());
 app.use("/api", routes);
+
+app.use("/", (req, res) => {
+  res.send(`<h1> Welcome to Annashaki Rest APIs</h1>`);
+});
 
 app.use(errorHandler);
 
-app.listen(APP_PORT, () => console.log(`Listening on port ${APP_PORT}`));
+const PORT = process.env.PORT || APP_PORT;
+
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

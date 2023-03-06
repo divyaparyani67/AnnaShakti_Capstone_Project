@@ -39,6 +39,26 @@ const donationController = {
       .status(201)
       .json({ document, message: "Donation details added successfully" });
   },
+
+  async index(req, res, next) {
+    let documents;
+    try {
+      documents = await Donation.find().select("-__v");
+    } catch (err) {
+      return next(CustomErrorHandler.serverError());
+    }
+
+    return res.json(documents);
+  },
+  async show(req, res, next) {
+    let document;
+    try {
+      document = await Donation.findOne({ _id: req.params.id }).select("-__v");
+    } catch (err) {
+      return next(CustomErrorHandler.serverError);
+    }
+    return res.json(document);
+  },
 };
 
 export default donationController;
