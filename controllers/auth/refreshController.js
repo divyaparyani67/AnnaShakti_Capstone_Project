@@ -34,7 +34,7 @@ const refreshController = {
           refreshtoken.token,
           REFRESH_SECRET
         );
-        userId - _id;
+        userId = _id;
       } catch (err) {
         return next(CustomErrorHandler.unAuthorized("Invalid refresh token"));
       }
