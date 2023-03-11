@@ -1,5 +1,6 @@
-This is my Capstone_Project backend 
-Here 5 have created api for user login and registration
-This is a food donation app and api's are created for donor and donations.
+This is the Annashakti app backend 
+This project consists api for user login and registration and for food donation api'- donor, volunteer, donations and volunteering  have been created.
 
-https://capstone-project-annashakti-backend.onrender.com
+
+
+This is the api link - https://capstone-project-annashakti-backend.onrender.com
