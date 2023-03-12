@@ -39,9 +39,31 @@ const volunteerController = {
   },
 
   async index(req, res, next) {
-    let documents;
     try {
-      documents = await Volunteer.find().select("-__v");
+      let { page, size, paginateddonations } = req.query;
+
+      if (!page) {
+        page = 1;
+      }
+      if (!size) {
+        size = 3;
+      }
+
+      const limit = parseInt(size);
+      const skip = (page - 1) * 3;
+
+      paginateddonations = await Volunteer.find()
+        .skip(skip)
+        .limit(limit)
+        .select("-__v");
+
+      //documents = await Donation.find().select("-__v"); // this is for getting all donation
+      //.sort({ _id: 1 }) this is for sort
+      res.send({
+        page,
+        size,
+        paginateddonations,
+      });
     } catch (err) {
       return next(CustomErrorHandler.serverError());
     }
