@@ -6,7 +6,6 @@ import { REFRESH_SECRET } from "../../config";
 const registerController = {
   async register(req, res, next) {
     //validation
-
     const registerSchema = Joi.object({
       name: Joi.string().min(3).max(30).required(),
       email: Joi.string().email().required(),
@@ -29,7 +28,6 @@ const registerController = {
     }
 
     //check if user in the databse already
-
     try {
       const exist = await User.exists({ email: req.body.email });
       if (exist) {
@@ -42,12 +40,11 @@ const registerController = {
     }
 
     const { name, email, phone, password } = req.body;
-    // hash-password
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // hash-password
+    const hashedPassword = await bcrypt.hash(password, 10); //saltorrounds
 
     //prepare the model
-
     const user = new User({
       name,
       email,

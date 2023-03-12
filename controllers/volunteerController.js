@@ -3,6 +3,7 @@ import { CustomErrorHandler } from "../services";
 import volunteerSchema from "../validators/volunteervalidator";
 import Joi from "joi";
 
+////creating volunteer form
 const volunteerController = {
   async volunteer(req, res, next) {
     // validation
@@ -19,6 +20,7 @@ const volunteerController = {
       state,
     } = req.body;
 
+    // //adding data volunteer form
     let document;
     try {
       document = await Volunteer.create({
@@ -38,9 +40,10 @@ const volunteerController = {
       .json({ document, message: "Volunteer details added successfully" });
   },
 
+  ////find the volunteer data with pagination
   async index(req, res, next) {
     try {
-      let { page, size, paginateddonations } = req.query;
+      let { page, size, paginatedvolunteers } = req.query;
 
       if (!page) {
         page = 1;
@@ -52,17 +55,17 @@ const volunteerController = {
       const limit = parseInt(size);
       const skip = (page - 1) * 3;
 
-      paginateddonations = await Volunteer.find()
+      paginatedvolunteers = await Volunteer.find()
         .skip(skip)
         .limit(limit)
         .select("-__v");
 
-      //documents = await Donation.find().select("-__v"); // this is for getting all donation
+      //documents = await Voluntter.find().select("-__v"); // this is for getting all donation
       //.sort({ _id: 1 }) this is for sort
       res.send({
         page,
         size,
-        paginateddonations,
+        paginatedvolunteers,
       });
     } catch (err) {
       return next(CustomErrorHandler.serverError());
@@ -70,6 +73,8 @@ const volunteerController = {
 
     return res.json(documents);
   },
+
+  //find the Volunteer with id
   async show(req, res, next) {
     let document;
     try {

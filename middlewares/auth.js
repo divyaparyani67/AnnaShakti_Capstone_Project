@@ -1,12 +1,13 @@
 import { CustomErrorHandler, JwtService } from "../services";
 
+//token authorization check
 const auth = async (req, res, next) => {
   let authHeader = req.headers.authorization;
 
   if (!authHeader) {
     return next(CustomErrorHandler.unAuthorized());
   }
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1]; //remmove bearer
 
   try {
     const { _id, role } = await JwtService.verify(token);

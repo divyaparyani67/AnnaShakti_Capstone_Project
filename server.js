@@ -18,14 +18,13 @@ db.once("open", () => {
   console.log("DB connected.... ");
 });
 
+//middlewares
 app.use(express.json());
 app.use(cors());
 app.use("/api", routes);
-
 app.use("/", (req, res) => {
   res.send({ Message: "Welcome to Annashaki Rest API" });
 });
-
 app.use(errorHandler);
 
 const PORT = process.env.PORT || APP_PORT;

@@ -1,6 +1,7 @@
 import { User } from "../../models";
 import { CustomErrorHandler, JwtService } from "../../services";
 
+//get user data /me
 const userController = {
   async me(req, res, next) {
     try {
