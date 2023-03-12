@@ -60,7 +60,7 @@ const volunteerController = {
         .limit(limit)
         .select("-__v");
 
-      //documents = await Voluntter.find().select("-__v"); // this is for getting all donation
+      //documents = await Volunteer.find().select("-__v"); // this is for getting all donation
       //.sort({ _id: 1 }) this is for sort
       res.send({
         page,
