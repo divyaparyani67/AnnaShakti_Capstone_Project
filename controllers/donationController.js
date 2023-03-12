@@ -3,6 +3,7 @@ import { CustomErrorHandler } from "../services";
 import donationSchema from "../validators/donationvalidator";
 import Joi from "joi";
 
+//creating donation form
 const donationController = {
   async donations(req, res, next) {
     const { error } = donationSchema.validate(req.body); // validation
@@ -18,8 +19,7 @@ const donationController = {
       state,
     } = req.body;
 
-    console.log("running donation controller");
-
+    //adding data donation form
     let document;
     try {
       document = await Donation.create({
@@ -42,6 +42,7 @@ const donationController = {
       .json({ document, message: "Donation details added successfully" });
   },
 
+  //find the donation data with pagination
   async index(req, res, next) {
     try {
       let { page, size, paginateddonations } = req.query;
@@ -73,6 +74,7 @@ const donationController = {
     }
   },
 
+  //find the donation with id
   async show(req, res, next) {
     let document;
     try {
@@ -83,9 +85,9 @@ const donationController = {
     return res.json(document);
   },
 
+  //get id value
   async getDonation(req, res, next) {
     let documents;
-
     try {
       documents = await Donation.find({
         _id: { $in: req.body.ids },

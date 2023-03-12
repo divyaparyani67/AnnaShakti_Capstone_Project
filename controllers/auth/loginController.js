@@ -34,8 +34,7 @@ const loginController = {
         return next(CustomErrorHandler.wrongCredentials());
       }
 
-      //token
-
+      //generate token
       const access_token = JwtService.sign({ _id: user._id, role: user.role });
       const refresh_token = JwtService.sign(
         { _id: user._id, role: user.role },
@@ -50,7 +49,10 @@ const loginController = {
       return next(err);
     }
   },
+
+  //logout function
   async logout(req, res, next) {
+    
     //validation
     const refreshSchema = Joi.object({
       refresh_token: Joi.string().required(),

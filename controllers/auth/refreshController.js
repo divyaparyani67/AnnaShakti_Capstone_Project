@@ -4,7 +4,6 @@ import { REFRESH_SECRET } from "../../config";
 import { RefreshToken, User } from "../../models";
 import { CustomErrorHandler, JwtService } from "../../services";
 
-//refresh token is not getting passed
 const refreshController = {
   async refresh(req, res, next) {
     //validation
@@ -17,8 +16,7 @@ const refreshController = {
       return next(error);
     }
 
-    //database
-
+    //check in database
     let refreshtoken;
     try {
       refreshtoken = await RefreshToken.findOne({
@@ -28,6 +26,7 @@ const refreshController = {
         return next(CustomErrorHandler.unAuthorized("Invalid refresh token"));
       }
 
+      //verify token
       let userId;
       try {
         const { _id } = await JwtService.verify(
@@ -43,14 +42,14 @@ const refreshController = {
         return next(CustomErrorHandler.unAuthorized("No user found!"));
       }
 
-      //token
-
+      //generate token
       const access_token = JwtService.sign({ _id: user._id, role: user.role });
       const refresh_token = JwtService.sign(
         { _id: user._id, role: user.role },
         "1y",
         REFRESH_SECRET
       );
+      
       // database whitelist
       await RefreshToken.create({ token: refresh_token });
       res.json({ access_token, refresh_token });
