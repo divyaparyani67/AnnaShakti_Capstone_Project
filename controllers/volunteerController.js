@@ -41,7 +41,11 @@ const volunteerController = {
   async index(req, res, next) {
     let documents;
     try {
-      documents = await Volunteer.find().select("-__v");
+      const {page,limit} = req.query;
+      const skip = (page-1)*10;
+      documents = await Volunteer.find().select("-__v").skip(skip).limit(limit);
+      res.send(documents)
+      
     } catch (err) {
       return next(CustomErrorHandler.serverError());
     }
