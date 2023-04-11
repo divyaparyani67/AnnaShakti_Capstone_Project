@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api", routes);
 app.use("/", (req, res) => {
-  res.send({ Message: "Welcome to Annashaki Rest API" });
+  res.send({ Message: "Welcome to Annashakti Rest API" });
 });
 app.use(errorHandler);
 
